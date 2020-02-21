@@ -22,11 +22,11 @@ import android.content.res.Resources;
 
 public class RNImageHelperModule extends ReactContextBaseJavaModule {
 
-  private final ReactApplicationContext reactContext;
+  private static ReactApplicationContext reactContext;
 
   public RNImageHelperModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    this.reactContext = reactContext;
+    RNImageHelperModule.reactContext = reactContext;
   }
 
   @Override
@@ -35,22 +35,22 @@ public class RNImageHelperModule extends ReactContextBaseJavaModule {
   }
 
   @TargetApi(21)
-  public Drawable GenerateImage(ReadableMap props) {
+  public static Drawable GenerateImage(ReadableMap props) {
     String name = props.getString("name");
 
     if (name != null && name.length() > 0 && name.contains(".")) {
-      Resources resources = getReactApplicationContext().getResources();
+      Resources resources = RNImageHelperModule.reactContext.getResources();
       name = name.substring(0, name.lastIndexOf("."));
 
-      final int resourceId = resources.getIdentifier(name, "drawable", getReactApplicationContext().getPackageName());
-      return getReactApplicationContext().getDrawable(resourceId);
+      final int resourceId = resources.getIdentifier(name, "drawable", RNImageHelperModule.reactContext.getPackageName());
+      return RNImageHelperModule.reactContext.getDrawable(resourceId);
     } else {
-      return this.GenerateVectorIcon(props);
+      return RNImageHelperModule.GenerateVectorIcon(props);
     }
   }
 
   @TargetApi(21)
-  public Drawable GenerateVectorIcon(ReadableMap icon) {
+  public static Drawable GenerateVectorIcon(ReadableMap icon) {
     try {
       StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
       StrictMode.setThreadPolicy(policy);
@@ -60,11 +60,11 @@ public class RNImageHelperModule extends ReactContextBaseJavaModule {
       String color = icon.getString("color");
       int size = icon.getInt("size");
 
-      float scale = getReactApplicationContext().getResources().getDisplayMetrics().density;
+      float scale = RNImageHelperModule.reactContext.getResources().getDisplayMetrics().density;
       String scaleSuffix = "@" + (scale == (int) scale ? Integer.toString((int) scale) : Float.toString(scale)) + "x";
       int fontSize = Math.round(size * scale);
 
-      Typeface typeface = ReactFontManager.getInstance().getTypeface(family, 0, getReactApplicationContext().getAssets());
+      Typeface typeface = ReactFontManager.getInstance().getTypeface(family, 0, RNImageHelperModule.reactContext.getAssets());
       Paint paint = new Paint();
       paint.setTypeface(typeface);
 
@@ -85,7 +85,7 @@ public class RNImageHelperModule extends ReactContextBaseJavaModule {
       Canvas canvas = new Canvas(bitmap);
       canvas.drawText(glyph, -textBounds.left, -textBounds.top, paint);
 
-      return new BitmapDrawable(getReactApplicationContext().getResources(), bitmap);
+      return new BitmapDrawable(RNImageHelperModule.reactContext.getResources(), bitmap);
     } catch (Exception exception) {
       return null;
     }

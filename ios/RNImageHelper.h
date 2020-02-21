@@ -10,5 +10,7 @@
 + (UIImage *) GenerateImage: (NSDictionary *) props;
 + (UIImage *) GenerateVectorIcon: (NSDictionary *) icon;
 
++ (UIColor *) ColorFromHexCode:(NSString *) hexString;
+
 @end
   
