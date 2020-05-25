@@ -16,7 +16,7 @@
   ],
   "author": "Pranav Raj Singh Chauhan",
   "devDependencies": {
-    "prettier-pack": "0.0.8"
+    "prettier-pack": "0.0.9"
   },
   "license": "Apache License 2.0"
 }
