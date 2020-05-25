@@ -48,7 +48,6 @@ public class RNImageHelperModule extends ReactContextBaseJavaModule {
   public static Drawable GenerateImage(ReadableMap props) {
     String name = props.getString("name");
     String url = null;
-
     if (props.hasKey("url")) {
       try {
         ReadableMap iconUrl = props.getMap("url");
