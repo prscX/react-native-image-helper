@@ -1,4 +1,6 @@
-    React Native: Image Helper (Android/iOS)
+<h1 align="center">
+
+	React Native: Image Helper (Android/iOS)
 
 If this project has helped you out, please support us with a star 🌟
 </h1>
